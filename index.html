@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlameSMP</title>
+
+<style>
+body { 
+  font-family: Arial, monospace; 
+  margin: 0; 
+  background: linear-gradient(to right, #ffd700, #ff8c00, #ff4500);
+  color: #fff; 
+  display: flex;
+  justify-content: center;
+}
+
+.container { 
+  width: 100%; 
+  max-width: 1200px; 
+  padding: 20px; 
+}
+
+/* 🔥 3D CARD */
+.card { 
+  background: #333; 
+  padding:20px; 
+  margin:15px 0; 
+  border-radius:15px; 
+  text-align:center;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover { 
+  transform: rotateY(10deg) rotateX(6deg); 
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+/* NAV */
+.nav-links {
+  margin-top:15px;
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
+.nav-links a {
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+/* STAFF */
+.staff-container {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:20px;
+}
+.staff-card {
+  background:#333;
+  padding:15px;
+  border-radius:15px;
+  text-align:center;
+  width:140px;
+  transition:0.3s;
+}
+.staff-card:hover {
+  transform: rotateY(15deg) rotateX(10deg);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+.staff-card img {
+  border-radius:50%;
+  margin-bottom:10px;
+}
+
+/* WHY JOIN */
+.why-container {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:20px;
+}
+.why-card {
+  background:#333;
+  padding:20px;
+  border-radius:15px;
+  width:250px;
+  transition:0.3s;
+}
+.why-card:hover {
+  transform: translateY(-5px);
+  box-shadow:0 20px 40px rgba(0,0,0,0.5);
+}
+
+.online { color:#00ff88; font-weight:bold; }
+
+/* BUTTON */
+button {
+  padding:10px;
+  background:#0077ff;
+  border:none;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+}
+button:hover { background:#005fcc; }
+
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<!-- 🔥 HEADER CARD -->
+<div class="card">
+  <img src="https://minotar.net/avatar/RealFlameDom/100" width="100" style="border-radius:50%;">
+  <h1 style="color:#ff5555;">ғʟᴀᴍᴇ sᴍᴘ</h1>
+  <p style="color:#ffd700;">ᴊᴏɪɴ ɴᴏᴡ!</p>
+  <p style="color:#ffff55;">1.16.5-1.21.11</p>
+
+  <div class="nav-links">
+    <a href="#staff">Staff</a>
+    <a href="#why">Why Join</a>
+    <a href="#support">Support</a>
+    <a href="https://flamesmp-store.netlify.app">Store</a>
+  </div>
+</div>
+
+<!-- 🔥 SERVER INFO -->
+<div class="card">
+  <h2>🟢 Server Status</h2>
+  <p>IP: <strong>157.173.124.239:25583</strong></p>
+  <p>Players: <span id="players" class="online">Loading...</span></p>
+  <p>Version: 1.16.5 – 1.21.11</p>
+  <p>Location: EU</p>
+</div>
+
+<!-- 🔥 STAFF -->
+<h2 id="staff">👑 Staff Team</h2>
+<div class="staff-container">
+  <div class="staff-card"><img src="https://minotar.net/avatar/RealFlameDom/100"><p>Owner</p></div>
+  <div class="staff-card"><img src="https://minotar.net/avatar/AngelMC55/100"><p>Co-Owner</p></div>
+  <div class="staff-card"><img src="https://minotar.net/avatar/sprostakttt/100"><p>Co-Owner</p></div>
+  <div class="staff-card"><img src="https://minotar.net/avatar/Wordazer_YT/100"><p>Manager</p></div>
+  <div class="staff-card"><img src="https://minotar.net/avatar/Jezevcik20/100"><p>Developer</p></div>
+  <div class="staff-card"><img src="https://minotar.net/avatar/DivadCZ/100"><p>Admin</p></div>
+</div>
+
+<!-- 🔥 WHY JOIN -->
+<h2 id="why">🎯 Why Join Our Server?</h2>
+<div class="why-container">
+  <div class="why-card">
+    <h3>🔥 Active Community</h3>
+    <p>Friendly players and active chat daily.</p>
+  </div>
+  <div class="why-card">
+    <h3>🎉 Events</h3>
+    <p>Regular events and giveaways.</p>
+  </div>
+  <div class="why-card">
+    <h3>⚔️ Economy SMP</h3>
+    <p>Balanced economy and fun gameplay.</p>
+  </div>
+</div>
+
+<!-- 🔥 SUPPORT -->
+<div id="support" class="card">
+  <h2>🛠 Support</h2>
+  <button onclick="window.location.href='https://discord.gg/G4RR9nNt7b'">
+    Join Discord
+  </button>
+</div>
+
+</div>
+
+<script>
+async function fetchPlayers(){
+  try{
+    const res = await fetch('https://api.mcsrvstat.us/2/157.173.124.239:25583');
+    const data = await res.json();
+    if(data.online){
+      document.getElementById('players').innerText =
+        data.players.online + " / " + data.players.max;
+    } else {
+      document.getElementById('players').innerText = "Offline";
+    }
+  } catch(e){
+    document.getElementById('players').innerText = "Error";
+  }
+}
+fetchPlayers();
+setInterval(fetchPlayers, 30000);
+</script>
+
+</body>
+</html>
